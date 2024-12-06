@@ -1,0 +1,48 @@
+<div class="container p-3 ">
+    <div class="row justify-content-center p-4">
+        <div class="col d-flex justify-content-end align-items-center">
+            <h1 class="text-center title"><span class="text-body-tertiary">Contact Our</span><br>Customer Support Center</h1>
+        </div>
+        <div class="col">
+            <img class="w-50" src="/image/mac.jpeg" alt="mac">
+        </div>
+    </div>
+    <div class="row justify-content-center align-items-center p-3 pt-5">
+        <div class="col text-center">
+            <h3>Contact Information</h3>
+            <p>Please fill out your Contact Information below</p>
+        </div>
+    </div>
+    <div class="row py-2 px-5 mx-5">
+        <div class="col">
+            <form [formGroup]="ContactForm">
+                <label class="pb-3 lhigh">Name<span class="text-body-tertiary">*</span></label>
+                <div class="row align-items-center pt-2">
+                    <div class="col-4 form-group">
+                        <input type="text" class="form-control" formControlName="firstName">
+                        <label class="pt-3 text-body-tertiary fw-medium">First Name</label>
+                    </div>
+                    <div class="col-4 form-group">
+                        <input type="text" class="form-control" formControlName="lastName">
+                        <label class="pt-3 text-body-tertiary fw-medium">last Name</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="py-3 lhigh">Email<span class="text-body-tertiary">*</span></label>
+                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}" class="form-control" formControlName="email">
+                </div>
+                <div class="form-group">
+                    <label class="py-3 lhigh">Phone<span class="text-body-tertiary">*</span></label>
+                    <input type="tel" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '')"  class="form-control" formControlName="phone">
+                </div>
+                <div class="form-group">
+                    <label class="py-3 lhigh">Address<span class="text-body-tertiary">*</span></label>
+                    <input type="text" class="form-control" formControlName="address">
+                </div>
+            </form>
+            <div class="my-4" *ngIf="ContactForm.dirty" >
+                <h3>{{ContactForm.value | json}}</h3>
+            </div>
+        </div>
+    </div>
+</div>

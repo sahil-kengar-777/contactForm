@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@500&family=Barlow+Condensed&display=swap');
+
+.title {
+    font-family: "Assistant", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+.lhigh{
+    font-size: 18px;
+    
+}
+.lhigh span{
+    font-size: 20px;
+    font-weight: 500;
+}
+@media (min-width: 1400px){.container{max-width: 1250px;}}
