@@ -16,31 +16,64 @@
     <div class="row py-2 px-5 mx-5">
         <div class="col">
             <form [formGroup]="ContactForm">
-                <label class="pb-3 lhigh">Name<span class="text-body-tertiary">*</span></label>
-                <div class="row align-items-center pt-2">
+                <div class="row pt-2">
                     <div class="col-4 form-group">
-                        <input type="text" class="form-control" formControlName="firstName">
                         <label class="pt-3 text-body-tertiary fw-medium">First Name</label>
+                        <input type="text" class="form-control" formControlName="firstName" [class.is-invalid]="ContactForm.get('firstName')?.invalid && ContactForm.get('firstName')?.touched" > 
+                        <small class="text-danger" *ngIf="ContactForm.get('firstName')?.errors?.['required'] && ContactForm.get('firstName')?.touched">First Name is required</small>
+                        <small class="text-danger" *ngIf="ContactForm.get('firstName')?.errors?.['pattern']">Invalid first name format</small>
                     </div>
                     <div class="col-4 form-group">
-                        <input type="text" class="form-control" formControlName="lastName">
                         <label class="pt-3 text-body-tertiary fw-medium">last Name</label>
+                        <input type="text" class="form-control" formControlName="lastName" [class.is-invalid]="ContactForm.get('lastName')?.invalid && ContactForm.get('lastName')?.touched">
+                        <small class="text-danger" *ngIf="ContactForm.get('lastName')?.errors?.['required'] && ContactForm.get('lastName')?.touched">Last Name is required</small>
+                        <small class="text-danger" *ngIf="ContactForm.get('lastName')?.errors?.['pattern'] && ContactForm.get('lastName')?.touched">Invalid last name format</small>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="py-3 lhigh">Email<span class="text-body-tertiary">*</span></label>
-                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}" class="form-control" formControlName="email">
+                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}" class="form-control" formControlName="email" [class.is-invalid]="ContactForm.get('email')?.invalid && ContactForm.get('email')?.touched">
+                    <small class="text-danger" *ngIf="ContactForm.get('email')?.errors?.['required'] && ContactForm.get('email')?.touched">Email is required</small>
+                    <small class="text-danger" *ngIf="ContactForm.get('email')?.errors?.['pattern'] && ContactForm.get('email')?.touched">Invalid Email format</small>
                 </div>
                 <div class="form-group">
                     <label class="py-3 lhigh">Phone<span class="text-body-tertiary">*</span></label>
-                    <input type="tel" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '')"  class="form-control" formControlName="phone">
+                    <input type="tel" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '')"  class="form-control" formControlName="phone" [class.is-invalid]="ContactForm.get('phone')?.invalid && ContactForm.get('phone')?.touched">
+                    <small class="text-danger" *ngIf="ContactForm.get('phone')?.errors?.['required'] && ContactForm.get('phone')?.touched">Phone is required</small>
+                    <small class="text-danger" *ngIf="ContactForm.get('phone')?.errors?.['pattern'] && ContactForm.get('phone')?.touched">Invalid Phone format</small>
                 </div>
                 <div class="form-group">
-                    <label class="py-3 lhigh">Address<span class="text-body-tertiary">*</span></label>
-                    <input type="text" class="form-control" formControlName="address">
+                    <label class="py-3 lhigh">City<span class="text-body-tertiary">*</span></label>
+                    <input type="text" class="form-control" formControlName="City" [class.is-invalid]="ContactForm.get('City')?.invalid && ContactForm.get('City')?.touched">
+                    <small class="text-danger" *ngIf="ContactForm.get('City')?.errors?.['required'] && ContactForm.get('City')?.touched">City is required</small>
+                    <small class="text-danger" *ngIf="ContactForm.get('City')?.errors?.['pattern'] && ContactForm.get('City')?.touched">Invalid City format</small>
+                </div>
+                <div class="form-group mb-4">
+                    <label class="py-3 lhigh">State<span class="text-body-tertiary">*</span></label>
+                    <select class="form-control" formControlName="state" required [class.is-invalid]="ContactForm.get('state')?.invalid && ContactForm.get('state')?.touched">
+                        <option selected disabled>Choose...</option>
+                        <option>Maharashtra</option>
+                        <option>Gujarat</option>
+                        <option>Uttar Pradesh</option>
+                    </select>
+                    <small class="text-danger" *ngIf="ContactForm.get('state')?.errors?.['required'] && ContactForm.get('state')?.touched">State is required</small>
+                </div>
+                <div class="form-group mb-4">
+                    <label class="form-label">ZIP code<span class="text-danger"> *</span> </label>
+                    <input type="number" [class.is-invalid]="ContactForm.get('zipcode')?.invalid && ContactForm.get('zipcode')?.touched" class="form-control" formControlName="zipcode">
+                    <small *ngIf="ContactForm.get('zipcode')?.errors?.['required']  && ContactForm.get('zipcode')?.touched" class="text-danger">ZIP code number is required.</small>
+                    <small *ngIf="ContactForm.get('zipcode')?.errors?.['pattern'] " class="text-danger">Invalid ZIP codeformat.</small>
+                </div>
+                <div class="form-group mb-4">
+                    <label for="floatingTextarea">Comments<span class="text-danger"> *</span></label>
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" [class.is-invalid]="ContactForm.get('comment')?.invalid && ContactForm.get('comment')?.touched" class="form-control" formControlName="comment"></textarea>
+                    <small [class.d-none]="ContactForm.get('comment')?.valid || ContactForm.get('comment')?.untouched" class="text-danger">Comment must be at least 30 characters long.</small>
+                </div>
+                <div class=" p-3 mt-3 d-flex justify-content-center">
+                   <button type="submit" [disabled]="!ContactForm.valid" class="btn btn-primary px-3 py-2" (click)="showData()">Submit</button>
                 </div>
             </form>
-            <div class="my-4" *ngIf="ContactForm.dirty" >
+            <div class="my-4" *ngIf="displayFlag">
                 <h3>{{ContactForm.value | json}}</h3>
             </div>
         </div>
